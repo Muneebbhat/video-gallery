@@ -1,0 +1,21 @@
+{
+  "name": "video-gallery",
+  "version": "1.0.0",
+  "description": "this is a video gallery",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": [],
+  "author": "Muneeb ahmad bhat",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongoose": "^8.0.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.3"
+  }
+}
