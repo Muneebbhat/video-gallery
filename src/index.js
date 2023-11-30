@@ -1,15 +1,15 @@
-import { configDotenv } from 'dotenv';
-configDotenv();
-import express from 'express';
+import { configDotenv } from "dotenv";
+import databaseConnection from "./db/index.js";
+import { app } from "./app.js";
 
-const app = express();
-app.get('/', (req, res) => {
-  res.send(`hello world`);
-});
-app.listen(process.env.PORT, error => {
-  try {
-    console.log(`server listening on ${process.env.PORT}`);
-  } catch (error) {
-    console.log(`server listening on ${error}`);
-  }
-});
+configDotenv();
+
+databaseConnection()
+  .then(() => {
+    app.listen(process.env.PORT, () => {
+      console.log(`listening to the port: ${process.env.PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.log("Database connection error" + error.message);
+  });
