@@ -1,6 +1,12 @@
-import { v2 as cloudinary } from "cloudinary";
+// import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
+import { v2 as cloudinary } from "cloudinary";
 
+// cloudinary.config({
+//   cloud_name: "reactor-webs",
+// api_key: "592975536791789",
+//   api_secret: "YTqd7lcGlYYGjE0tr3Q7zcYU4jg",
+// });
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -9,17 +15,19 @@ cloudinary.config({
 
 const uploadOnCloudinary = async (localFilePath) => {
   try {
-    if (!localFilePath) return "could not find local file";
+    if (!localFilePath) return null;
     // upload file on cloudinary
     const response = await cloudinary.uploader.upload(localFilePath, {
       resource_type: "auto",
     });
     //file has been upload successfully
     console.log(`file uploaded successfully on cloudinary`, response.url);
+    fs.unlinkSync(localFilePath);
     return response;
   } catch (error) {
     //remove the locally uploaded file if failed
     fs.unlinkSync(localFilePath);
+    return null;
   }
 };
 
